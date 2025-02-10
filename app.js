@@ -21,6 +21,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.get("/", (req,res)=>{
+  res.send("Welcome to the Food Order API!");
+})
 app.use('/admin', adminRoutes);
 app.use('/meals', mealRoutes);
 app.use('/orders', orderRoutes);
