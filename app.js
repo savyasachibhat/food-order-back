@@ -13,10 +13,9 @@ const { connectDB } = require('./config/db');
 connectDB();
 
 app.use(cors({
-  origin: 'https://mernfood-psi.vercel.app', // Replace with your front-end URL
-  methods: 'GET,POST', // Add other methods if needed
+  origin: 'https://mernfood-psi.vercel.app', // Replace with your front-end domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
