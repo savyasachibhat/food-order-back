@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
-
+app.use(cors());
 // Import routes
 const adminRoutes = require('./routes/admin');
 const mealRoutes = require('./routes/meals');
@@ -12,7 +12,7 @@ const orderRoutes = require('./routes/orders');
 const { connectDB } = require('./config/db');
 connectDB();
 
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
