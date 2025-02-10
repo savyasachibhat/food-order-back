@@ -12,13 +12,7 @@ const orderRoutes = require('./routes/orders');
 const { connectDB } = require('./config/db');
 connectDB();
 
-const corsOptions = {
-  origin: 'https://mernfood-psi.vercel.app/', // Replace with your frontend URL
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-};
 
-app.use(cors(corsOptions))
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
