@@ -5,11 +5,18 @@ const router = express.Router();
 
 router.post('/',
   [
-    body('customer.name').notEmpty().withMessage('Full Name is required'),
+    body('customer.name').notEmpty().withMessage('Full Name is required').isString().withMessage('Name must be a string'),
+
     body('customer.email').isEmail().withMessage('Invalid Email Address'),
     body('customer.street').notEmpty().withMessage('Street is required'),
-    body('customer.pincode').notEmpty().withMessage('Pin Code is required'),
-    body('customer.city').notEmpty().withMessage('City is required'),
+    body('customer.pincode')
+  .notEmpty().withMessage('Pin Code is required')
+  .isNumeric().withMessage('Pin Code must be a number'),
+
+  body('customer.city')
+  .notEmpty().withMessage('City is required')
+  .isString().withMessage('City must be a string'),
+
     body('items').isArray({ min: 1 }).withMessage('Cart cannot be empty'),
     body('items.*.name').notEmpty().withMessage('Item name is required'),
     body('items.*.quantity').isInt({ gt: 0 }).withMessage('Item quantity must be greater than 0'),
