@@ -16,6 +16,15 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+
+  // Always serve index.html for all routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
+
 // Routes
 app.get("/", (req,res)=>{
   res.send("Welcome to the Food Order API!");
