@@ -7,6 +7,7 @@ app.use(cors());
 const adminRoutes = require('./routes/admin');
 const mealRoutes = require('./routes/meals');
 const orderRoutes = require('./routes/orders');
+const userRoutes = require('./routes/user');
 
 // Database connection
 const { connectDB } = require('./config/db');
@@ -25,6 +26,8 @@ app.get("/", (req,res)=>{
 app.use('/admin', adminRoutes);
 app.use('/meals', mealRoutes);
 app.use('/orders', orderRoutes);
+app.use('/user', userRoutes);
+
 
 // Error handling middleware
 app.use((req, res, next) => {
