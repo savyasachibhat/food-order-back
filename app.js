@@ -12,17 +12,17 @@ const userRoutes = require('./routes/user');
 // Database connection
 const { connectDB } = require('./config/db');
 connectDB();
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Change "*" to your frontend domain for production
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*"); 
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
+//   if (req.method === "OPTIONS") {
+//     return res.sendStatus(200);
+//   }
   
-  next();
-});
+//   next();
+// });
 
 app.use(cors());
 app.use(express.json());
