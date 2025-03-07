@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
-app.use(cors());
+
 // Import routes
 const adminRoutes = require('./routes/admin');
 const mealRoutes = require('./routes/meals');
@@ -13,7 +13,7 @@ const userRoutes = require('./routes/user');
 const { connectDB } = require('./config/db');
 connectDB();
 
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req,res)=>{
   res.send("Welcome to the Food Order API!");
 })
+app.use("/admin/login", adminAuthRoutes);
 app.use('/admin', adminRoutes);
 app.use('/meals', mealRoutes);
 app.use('/orders', orderRoutes);
