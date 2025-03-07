@@ -1,16 +1,39 @@
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
-const ADMIN_EMAIL = 'admin@gmail.com';
-const ADMIN_PASSWORD = bcrypt.hashSync('admin1234', 10);
-// admin login validation
-const validateAdminCredentials = (req, res, next) => {
-  const { email, password } = req.headers;
+// const ADMIN_EMAIL = 'admin@gmail.com';
+// const ADMIN_PASSWORD = bcrypt.hashSync('admin1234', 10);
 
-  if (email === ADMIN_EMAIL && bcrypt.compareSync(password, ADMIN_PASSWORD)) {
+// const validateAdminCredentials = (req, res, next) => {
+//   const { email, password } = req.headers;
+
+//   if (email === ADMIN_EMAIL && bcrypt.compareSync(password, ADMIN_PASSWORD)) {
+//     next();
+//   } else {
+//     res.status(401).json({ message: 'Invalid email or password' });
+//   }
+// };
+
+// module.exports = { validateAdminCredentials };
+const jwt = require("jsonwebtoken");
+
+const SECRET_KEY = "supersecretkey"; // Use environment variable in production
+
+const validateAdminJWT = (req, res, next) => {
+  const token = req.header("Authorization");
+
+  if (!token) {
+    return res.status(401).json({ message: "Access denied. No token provided." });
+  }
+
+  try {
+    const decoded = jwt.verify(token.split(" ")[1], SECRET_KEY);
+    if (decoded.role !== "admin") {
+      return res.status(403).json({ message: "Unauthorized access" });
+    }
     next();
-  } else {
-    res.status(401).json({ message: 'Invalid email or password' });
+  } catch (error) {
+    return res.status(400).json({ message: "Invalid token" });
   }
 };
 
-module.exports = { validateAdminCredentials };
+module.exports = { validateAdminJWT };
