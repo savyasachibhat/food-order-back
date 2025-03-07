@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req,res)=>{
   res.send("Welcome to the Food Order API!");
 })
-app.use("/admin/login", adminAuthRoutes);
+app.use("/admin", adminAuthRoutes);
 app.use('/admin', adminRoutes);
 app.use('/meals', mealRoutes);
 app.use('/orders', orderRoutes);
