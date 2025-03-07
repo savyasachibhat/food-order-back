@@ -8,6 +8,7 @@ const adminRoutes = require('./routes/admin');
 const mealRoutes = require('./routes/meals');
 const orderRoutes = require('./routes/orders');
 const userRoutes = require('./routes/user');
+const adminAuthRoutes = require('./routes/adminAuth')
 
 // Database connection
 const { connectDB } = require('./config/db');
