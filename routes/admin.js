@@ -19,14 +19,6 @@ const { validateAdminJWT } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  const token = req.header("Authorization")?.split(" ")[1]; // Extract token from headers
-  if (!token) {
-      return res.status(401).json({ message: "Unauthorized. Please log in." });
-  }
-  next();
-});
-
 // Protected admin route - Requires JWT
 router.get("/meals", validateAdminJWT, async (req, res) => {
   try {

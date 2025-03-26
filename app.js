@@ -9,7 +9,6 @@ const mealRoutes = require('./routes/meals');
 const orderRoutes = require('./routes/orders');
 const userRoutes = require('./routes/user');
 const adminAuthRoutes = require('./routes/adminAuth')
-const {validateAdminJWT} = require('./middleware/auth')
 
 // Database connection
 const { connectDB } = require('./config/db');
@@ -26,8 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req,res)=>{
   res.send("Welcome to the Food Order API!");
 })
-app.use('/admin', validateAdminJWT, adminRoutes);
 app.use("/admin", adminAuthRoutes);
+app.use('/admin', adminRoutes);
 app.use('/meals', mealRoutes);
 app.use('/orders', orderRoutes);
 app.use('/user', userRoutes);
