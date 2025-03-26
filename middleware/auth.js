@@ -14,30 +14,56 @@
 // };
 
 // module.exports = { validateAdminCredentials };
+// const jwt = require("jsonwebtoken");
+
+// const SECRET_KEY = "supersecretkey"; 
+
+// const validateAdminJWT = (req, res, next) => {
+//   const token = req.header("Authorization");
+
+//   if (!token) {
+    
+//     return res.status(401).json({ message: "Access denied. No token provided." });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token.split(" ")[1], SECRET_KEY);
+//     if (decoded.role !== "admin") {
+      
+//       return res.status(403).json({ message: "Unauthorized access" });
+
+//     }
+//     next();
+//   } catch (error) {
+   
+//     return res.status(400).json({ message: "Invalid token" });
+//   }
+// };
+
+// module.exports = { validateAdminJWT };
+
 const jwt = require("jsonwebtoken");
 
-const SECRET_KEY = "supersecretkey"; // Use environment variable in production
+const SECRET_KEY = process.env.SECRET_KEY || "supersecretkey"; // Use .env in production
 
+// ✅ Middleware to check if admin is authenticated
 const validateAdminJWT = (req, res, next) => {
-  const token = req.header("Authorization");
+    const token = req.header("Authorization")?.split(" ")[1];
 
-  if (!token) {
-    console.log('heyy');
-    return res.status(401).json({ message: "Access denied. No token provided." });
-  }
-
-  try {
-    const decoded = jwt.verify(token.split(" ")[1], SECRET_KEY);
-    if (decoded.role !== "admin") {
-      console.log('heyy1');
-      return res.status(403).json({ message: "Unauthorized access" });
-
+    if (!token) {
+        return res.status(401).json({ message: "Access denied. No token provided." });
     }
-    next();
-  } catch (error) {
-    console.log('heyy2');
-    return res.status(400).json({ message: "Invalid token" });
-  }
+
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        if (decoded.role !== "admin") {
+            return res.status(403).json({ message: "Unauthorized access" });
+        }
+        req.user = decoded; // Store decoded user in request
+        next();
+    } catch (error) {
+        return res.status(400).json({ message: "Invalid token" });
+    }
 };
 
 module.exports = { validateAdminJWT };
