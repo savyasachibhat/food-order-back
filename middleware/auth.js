@@ -51,18 +51,18 @@ const validateAdminJWT = (req, res, next) => {
     const token = req.header("Authorization")?.split(" ")[1];
 
     if (!token) {
-        return res.status(401).json({ message: "Access denied. No token provided." });
+        return res.status(401).json({ redirectTo: "/" });
     }
 
     try {
         const decoded = jwt.verify(token, SECRET_KEY);
         if (decoded.role !== "admin") {
-            return res.status(403).json({ message: "Unauthorized access" });
+            return res.status(403).json({ redirectTo: "/" });
         }
         req.user = decoded; // Store decoded user in request
         next();
     } catch (error) {
-        return res.status(400).json({ message: "Invalid token" });
+        return res.status(400).json({ redirectTo: "/" });
     }
 };
 
