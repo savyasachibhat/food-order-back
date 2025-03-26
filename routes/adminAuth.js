@@ -17,6 +17,7 @@ router.post("/login", (req, res) => {
     const token = jwt.sign({ role: "admin" }, SECRET_KEY, { expiresIn: "1h" });
     return res.json({ message: "Admin login successful", token });
   } else {
+    console.log('heyy4');
     return res.status(401).json({ message: "Unauthorized access" });
   }
 });

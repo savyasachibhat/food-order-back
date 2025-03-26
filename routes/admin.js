@@ -25,6 +25,7 @@ router.get("/meals", validateAdminJWT, async (req, res) => {
     const meals = await Meal.find();
     res.json({ message: "Admin access granted", meals });
   } catch (err) {
+    console.log('heyy3');
     res.status(500).json({ message: err.message });
   }
 });
