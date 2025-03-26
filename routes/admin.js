@@ -18,7 +18,7 @@ const Meal = require("../models/meal");
 const { validateAdminJWT } = require("../middleware/auth");
 
 const router = express.Router();
-
+router.use(validateAdminJWT);
 // Protected admin route - Requires JWT
 router.get("/meals", validateAdminJWT, async (req, res) => {
   try {
